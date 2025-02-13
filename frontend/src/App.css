@@ -1,0 +1,12 @@
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  padding-top: 120px; /* Ajustez cette valeur en fonction de la hauteur de votre header */
+  padding-bottom: 250px; /* Ajustez cette valeur en fonction de la hauteur de votre footer */
+}
+
