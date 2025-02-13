@@ -1,0 +1,27 @@
+
+.localisation {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .map-container {
+    height: 400px;
+    background-color: #f0f0f0;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .location-selector {
+    text-align: center;
+  }
+  
+  .location-selector input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  
