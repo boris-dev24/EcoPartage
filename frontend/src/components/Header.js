@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaUser, FaSignInAlt } from 'react-icons/fa';
+import { FaUser, FaSignInAlt, FaChevronDown } from 'react-icons/fa';
 import '../styles/Header.css';
 
 function Header() {
+  const [activeDropdown, setActiveDropdown] = useState(null);
+
+  const handleDropdownHover = (dropdownName) => {
+    setActiveDropdown(dropdownName);
+  };
+
+  const handleDropdownLeave = () => {
+    setActiveDropdown(null);
+  };
+
   return (
     <>
       <div className="slogan-bar">
@@ -14,16 +24,24 @@ function Header() {
         <nav className="main-nav">
           <ul>
             <li><Link to="/">Accueil</Link></li>
-            <li className="dropdown">
-              <Link to="/annonces">Annonces</Link>
-              <div className="dropdown-content">
+            <li 
+              className="dropdown"
+              onMouseEnter={() => handleDropdownHover('annonces')}
+              onMouseLeave={handleDropdownLeave}
+            >
+              <Link to="/annonces">Annonces <FaChevronDown className="dropdown-arrow" /></Link>
+              <div className={`dropdown-content ${activeDropdown === 'annonces' ? 'active' : ''}`}>
                 <Link to="/annonces/creer">Créer une annonce</Link>
                 <Link to="/annonces/voir">Voir les annonces</Link>
               </div>
             </li>
-            <li className="dropdown">
-              <Link to="/evenements">Événements</Link>
-              <div className="dropdown-content">
+            <li 
+              className="dropdown"
+              onMouseEnter={() => handleDropdownHover('evenements')}
+              onMouseLeave={handleDropdownLeave}
+            >
+              <Link to="/evenements">Événements <FaChevronDown className="dropdown-arrow" /></Link>
+              <div className={`dropdown-content ${activeDropdown === 'evenements' ? 'active' : ''}`}>
                 <Link to="/evenements/creer">Créer un événement</Link>
                 <Link to="/evenements/voir">Voir les événements</Link>
               </div>
@@ -33,13 +51,13 @@ function Header() {
           </ul>
         </nav>
         <div className="auth-nav">
-          <Link to="/inscription"><FaUser /> Inscription</Link>
-          <Link to="/connexion"><FaSignInAlt /> Connexion</Link>
+          <Link to="/inscription" className="auth-button"><FaUser /> Inscription</Link>
+          <Link to="/connexion" className="auth-button"><FaSignInAlt /> Connexion</Link>
         </div>
       </header>
     </>
   );
 }
 
-export default Header; 
+export default Header;
 
