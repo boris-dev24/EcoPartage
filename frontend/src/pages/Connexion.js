@@ -1,23 +1,65 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Connexion.css';
+import axios from 'axios';
 
 function Connexion() {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [motDePasse, setMotDePasse] = useState('');
   const [showPasswordReset, setShowPasswordReset] = useState(false);
   const [resetEmail, setResetEmail] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');  // Pour afficher l'erreur de connexion
 
-  const handleSubmit = (e) => {
+  // Utilisation du hook useNavigate pour la redirection après la connexion réussie
+  const navigate = useNavigate();
+
+  // Fonction de soumission de connexion
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // Logique de connexion à implémenter
-    console.log('Connexion:', { email, password });
+    setErrorMessage('');  // Réinitialiser les erreurs à chaque nouvelle tentative
+
+    // Validation de l'email
+    if (!email.includes('@')) {
+      setErrorMessage('Veuillez entrer un email valide.');
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost/ecopartage/backend/api/connexion.php', {
+        email,
+        motDePasse,
+      });
+      console.log(response.data);
+
+      // Rediriger l'utilisateur après la connexion
+      if (response.data.success) {
+        // Sauvegarder les informations de l'utilisateur dans le localStorage ou autre
+        localStorage.setItem('user', JSON.stringify(response.data.user)); // Exemple de sauvegarde du user dans le localStorage
+        navigate('/'); // Redirige vers la page d'accueil 
+      } else {
+        setErrorMessage('Erreur de connexion. Vérifiez vos informations.');
+      }
+    } catch (error) {
+      console.error('Erreur de connexion', error);
+      setErrorMessage('Erreur lors de la connexion. Veuillez réessayer.');
+    }
+    console.log('Connexion:', { email, motDePasse });
   };
 
-  const handlePasswordReset = (e) => {
+  // Fonction de réinitialisation du mot de passe
+  const handlePasswordReset = async(e) => {
     e.preventDefault();
-    // Logique de réinitialisation du mot de passe à implémenter
+    try {
+      // Envoi de l'email pour réinitialiser le mot de passe
+      const response = await axios.post('http://localhost/ecopartage/backend/api/resetPassword.php', {
+        email: resetEmail, // Email pour la réinitialisation
+      });
+      console.log(response.data);
+      alert('Un lien de réinitialisation a été envoyé à votre email');
+    } catch (error) {
+      console.error('Erreur lors de la réinitialisation du mot de passe', error);
+    }
     console.log('Réinitialisation du mot de passe pour:', resetEmail);
   };
 
@@ -40,8 +82,8 @@ function Connexion() {
               <input 
                 type="password" 
                 placeholder="Mot de passe"
-                value={password} 
-                onChange={(e) => setPassword(e.target.value)} 
+                value={motDePasse} 
+                onChange={(e) => setMotDePasse(e.target.value)} 
                 required 
               />
             </div>

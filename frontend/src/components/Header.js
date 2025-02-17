@@ -1,9 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaUser, FaSignInAlt } from 'react-icons/fa';
+import { FaUser, FaSignInAlt, FaSignOutAlt } from 'react-icons/fa';
 import '../styles/Header.css';
 
 function Header() {
+  // Etat pour savoir si l'utilisateur est connecté
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // Pour gérer le chargement des données utilisateur
+
+  useEffect(() => {
+    // Vérifier si les données utilisateur existent dans le localStorage
+    const userData = localStorage.getItem('user');
+    
+    // Si les données existent et sont valides, on les parse
+    if (userData) {
+      try {
+        const parsedUser = JSON.parse(userData);
+        setUser(parsedUser); // Si réussi, on met à jour l'état
+      } catch (error) {
+        console.error('Erreur lors de la récupération de l\'utilisateur depuis le localStorage', error);
+      }
+    }
+
+    // Fin de la récupération des données utilisateur, on indique que le chargement est terminé
+    setLoading(false);
+  }, []);
+
+  const handleLogout = () => {
+    // Logique de déconnexion
+    localStorage.removeItem('user'); // Retirer les données utilisateur du localStorage
+    setUser(null); // Réinitialiser l'état
+  };
+
+  if (loading) {
+    // Afficher un indicateur de chargement ou rien pendant que les données sont en cours de récupération
+    return <div>Chargement...</div>;
+  }
+
+
   return (
     <>
       <div className="slogan-bar">
@@ -33,8 +67,18 @@ function Header() {
           </ul>
         </nav>
         <div className="auth-nav">
+         {!user ?(
+          <>
           <Link to="/inscription"><FaUser /> Inscription</Link>
           <Link to="/connexion"><FaSignInAlt /> Connexion</Link>
+          </>
+         ):(
+          <>
+              <span className="user-name">{user.nom}</span> {/* Afficher le nom de l'utilisateur */}
+              <button onClick={handleLogout}><FaSignOutAlt /> Déconnexion</button> {/* Bouton de déconnexion */}
+          </>
+         )} 
+          
         </div>
       </header>
     </>
