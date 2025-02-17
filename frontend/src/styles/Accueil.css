@@ -1,25 +1,36 @@
-
-.accueil-page {
+/* Styles généraux */
+body, html {
+  margin: 0;
+  padding: 0;
   font-family: Arial, sans-serif;
-  color: #333;
   line-height: 1.6;
+  color: #333;
 }
 
+.accueil-page > section {
+  width: 100%;
+  padding: 50px 5%;
+  box-sizing: border-box;
+}
+
+/* Hero Section */
 .hero {
-  background-color: #f0f0f0;
+  background-color: #8f1d1d;
   text-align: center;
-  padding: 50px 20px;
+  padding: 100px 5%;
+  color: white;
+  background-size: cover;
+  background-position: center;
+  position: relative;
 }
 
-h1 {
+.hero h1 {
   font-size: 2.5em;
-  color: #4CAF50;
   margin-bottom: 20px;
 }
 
-h2 {
+.hero h2 {
   font-size: 1.8em;
-  color: #4CAF50;
   margin-bottom: 20px;
 }
 
@@ -29,105 +40,377 @@ h2 {
   margin-bottom: 20px;
 }
 
-.search-bar input {
-  padding: 10px;
+.search-bar input,
+.search-bar button {
   font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px 0 0 4px;
+  padding: 15px;
+}
+
+.search-bar input {
   width: 300px;
+  border: none;
+  border-radius: 4px 0 0 4px;
 }
 
 .search-bar button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #4CAF50;
+  background-color: #0b490d;
   color: white;
   border: none;
   border-radius: 0 4px 4px 0;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.cta-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
+.search-bar button:hover {
+  background-color: #0b490d;
 }
 
 .cta-button {
   display: inline-block;
-  padding: 10px 20px;
-  background-color: #4CAF50;
+  padding: 15px 30px;
+  background-color: #0b490d;
   color: white;
   text-decoration: none;
   border-radius: 4px;
   font-weight: bold;
+  transition: background-color 0.3s;
+  font-size: 16px;
+  margin: 0 10px;
 }
 
-.how-it-works, .inspirations, .services, .benefits, .join-movement {
-  padding: 50px 20px;
+.cta-button:hover {
+  background-color: #0b490d;
+}
+
+/* How it works Section */
+.how-it-works {
+  background-color: #0b490d;
+  color: white;
+  text-align: center;
+  padding: 50px 5%;
+}
+
+.how-it-works h2 {
+  font-size: 2em;
+  margin-bottom: 40px;
 }
 
 .steps {
   display: flex;
   justify-content: space-around;
-  flex-wrap: wrap;
+  margin-bottom: 40px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .step {
   flex-basis: 30%;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.inspiration-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+.step img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 20px;
+}
+
+.step p {
+  font-size: 1em;
+  line-height: 1.4;
+}
+
+/* Inspiration Carousel */
+.inspiration-title {
+  font-size: 1.8em;
+  margin-top: 40px;
+}
+
+.inspiration-carousel {
+  position: relative;
+  height: 100px;
+  overflow: hidden;
+  max-width: 600px;
+  margin: 20px auto;
 }
 
 .inspiration-item {
-  background-color: #f0f0f0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  background-color: #0b490d;
+  color: #ffffff;
   padding: 20px;
-  border-radius: 4px;
+  border-radius: 10px;
+  font-style: italic;
+}
+
+.inspiration-item.active {
+  opacity: 1;
+}
+
+/* Services Section */
+.services {
+  background-color: #f9f9f9;
+  text-align: center;
+  padding: 50px 5%;
+}
+
+.services h2 {
+  color: #0b490d;
+  font-size: 2em;
+  margin-bottom: 30px;
 }
 
 .service-categories {
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
-.category {
+.category-button {
   font-weight: bold;
-  color: #4CAF50;
+  font-size: 1.2em;
+  padding: 10px 20px;
+  border: 2px solid #0b490d;
+  background-color: white;
+  color: #0b490d;
+  cursor: pointer;
+  transition: all 0.3s;
 }
 
-.service-list {
+.category-button:hover,
+.category-button.active {
+  background-color: #0b490d;
+  color: white;
+}
+
+.service-examples {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .service-item {
-  background-color: #f0f0f0;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.service-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.service-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #0b490d;
+  color: white;
   padding: 10px;
-  border-radius: 4px;
   text-align: center;
+}
+
+.service-info h3 {
+  margin: 0;
+  font-size: 1em;
+}
+
+/* Benefits Section */
+.benefits {
+  background-color: #f0f0f0;
+  padding: 50px 5%;
+  text-align: center;
+}
+
+.benefits h2 {
+  color: #0b490d;
+  font-size: 2em;
+  margin-bottom: 30px;
 }
 
 .benefit-items {
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 50px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .benefit-item {
   flex-basis: 30%;
+  text-align: left;
+}
+
+.benefit-item h3 {
+  color: #0b490d;
+  margin-bottom: 15px;
+}
+
+.different-section {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.different-section h3 {
+  color: #0b490d;
+  margin-bottom: 20px;
+}
+
+.different-section p {
+  margin-bottom: 20px;
+}
+
+.different-section .cta-button {
+  background-color: #0b490d;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+* Network Features Section */
+.network-features {
+  background-color: #f9f9f9;
+  padding: 50px 5%;
   text-align: center;
 }
 
-.join-movement {
+.network-features h2 {
+  color: #0b490d;
+  font-size: 2em;
+  margin-bottom: 30px;
   text-align: center;
-  background-color: #f0f0f0;
+}
+
+.features-container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.features-left, .features-right {
+  flex-basis: 30%;
+  text-align: left;
+}
+
+.features-center {
+  flex-basis: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.features-center img {
+  max-width: 100%;
+  height: auto;
+}
+
+.feature {
+  margin-bottom: 30px;
+}
+
+.feature h3 {
+  color: #0b490d;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.feature p {
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+.feature .cta-button {
+  background-color: #0b490d;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .features-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .features-left, .features-center, .features-right {
+    flex-basis: 100%;
+    margin-bottom: 30px;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .accueil-page > section {
+    padding: 30px 5%;
+  }
+
+  .steps, .benefit-items {
+    flex-direction: column;
+  }
+  
+  .step, .benefit-item {
+    margin-bottom: 20px;
+  }
+  
+  .search-bar input {
+    width: 200px;
+  }
+
+  .hero h1 {
+    font-size: 2em;
+  }
+
+  .hero h2 {
+    font-size: 1.5em;
+  }
+
+  .service-categories {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .category-button {
+    margin-bottom: 10px;
+  }
+}
+@media (max-width: 768px) {
+  .benefit-items {
+    flex-direction: column;
+  }
+  
+  .benefit-item {
+    margin-bottom: 30px;
+  }
 }
 
