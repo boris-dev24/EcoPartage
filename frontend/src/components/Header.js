@@ -88,8 +88,8 @@ function Header() {
         <div className="auth-nav">
          {!user ?(
           <>
-          <Link to="/inscription"><FaUser /> Inscription</Link>
-          <Link to="/connexion"><FaSignInAlt /> Connexion</Link>
+          <Link to="/inscription" className="auth-button"><FaUser /> Inscription</Link>
+          <Link to="/connexion" className="auth-button"><FaSignInAlt /> Connexion</Link>
           </>
          ):(
           <>
@@ -97,8 +97,7 @@ function Header() {
               <button onClick={handleLogout}><FaSignOutAlt /> Déconnexion</button> {/* Bouton de déconnexion */}
           </>
          )} 
-          <Link to="/inscription" className="auth-button"><FaUser /> Inscription</Link>
-          <Link to="/connexion" className="auth-button"><FaSignInAlt /> Connexion</Link>
+          
         </div>
       </header>
     </>
