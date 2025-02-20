@@ -31,8 +31,8 @@ function Header() {
             >
               <Link to="/annonces">Annonces <FaChevronDown className="dropdown-arrow" /></Link>
               <div className={`dropdown-content ${activeDropdown === 'annonces' ? 'active' : ''}`}>
-                <Link to="/annonces/creer">Créer une annonce</Link>
-                <Link to="/annonces/voir">Voir les annonces</Link>
+                <Link to="/annonces/creerAnnonce">Créer une annonce</Link>
+                <Link to="/annonces/voirAnnonce">Voir les annonces</Link>
               </div>
             </li>
             <li 
@@ -42,8 +42,8 @@ function Header() {
             >
               <Link to="/evenements">Événements <FaChevronDown className="dropdown-arrow" /></Link>
               <div className={`dropdown-content ${activeDropdown === 'evenements' ? 'active' : ''}`}>
-                <Link to="/evenements/creer">Créer un événement</Link>
-                <Link to="/evenements/voir">Voir les événements</Link>
+                <Link to="/evenements/creerEvenement">Créer un événement</Link>
+                <Link to="/evenements/voirEvenement">Voir les événements</Link>
               </div>
             </li>
             <li><Link to="/localisation">Localisation</Link></li>

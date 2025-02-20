@@ -7,6 +7,9 @@ import Connexion from './pages/Connexion';
 import Inscription from './pages/Inscription';
 import Localisation from './pages/Localisation';
 import ContactezNous from './pages/ContactezNous';
+import CreerAnnonce from './pages/CreerAnnonce';
+import CreerEvenement from './pages/CreerEvenement';
+import VoirAnnonce from './pages/VoirAnnonce';
 import './App.css';
 
 function App() {
@@ -21,6 +24,9 @@ function App() {
             <Route path="/inscription" element={<Inscription />} />
             <Route path="/localisation" element={<Localisation />} />
             <Route path="/contactez-nous" element={<ContactezNous />} />
+            <Route path="/annonces/creerAnnonce" element={<CreerAnnonce />} />
+            <Route path="/evenements/creerEvenement" element={<CreerEvenement />} />
+            <Route path="/annonces/voirAnnonce" element={<VoirAnnonce />} />
           </Routes>
         </main>
         <Footer />
@@ -30,4 +36,3 @@ function App() {
 }
 
 export default App;
-
