@@ -1,0 +1,83 @@
+.creer-annonce-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrer horizontalement */
+  padding: 20px;
+}
+
+.annonce-form {
+  width: 80%; /* Ajustez selon vos besoins */
+  max-width: 600px; /* Pour éviter que le formulaire ne soit trop large */
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #0b490d;
+}
+
+input[type='text'],
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Important pour que la largeur inclue le padding et la bordure */
+  font-size: 16px;
+}
+
+textarea {
+  height: 150px;
+}
+
+.radio-group {
+  display: flex;
+  gap: 20px;
+}
+
+.radio-group label {
+  font-weight: normal;
+}
+
+.image-upload-container {
+  display: flex;
+  gap: 10px;
+}
+
+.image-upload {
+  width: 100px;
+  height: 100px;
+  border: 1px dashed #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #777;
+}
+
+.note {
+  font-size: 14px;
+  color: #0b490d;
+  margin-bottom: 20px;
+}
+
+.btn-enregistrer {
+  background-color: #0b490d;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-enregistrer:hover {
+  background-color: #4e87a3;
+}
+
