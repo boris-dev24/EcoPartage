@@ -9,19 +9,26 @@ function Connexion() {
   const [motDePasse, setMotDePasse] = useState('');
   const [showPasswordReset, setShowPasswordReset] = useState(false);
   const [resetEmail, setResetEmail] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');  // Pour afficher l'erreur de connexion
+  const [message, setMessage] = useState('');  // Pour afficher l'erreur de connexion
+  const [resetMessage, setResetMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   // Utilisation du hook useNavigate pour la redirection après la connexion réussie
   const navigate = useNavigate();
 
+  const validateEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+
   // Fonction de soumission de connexion
   const handleSubmit = async(e) => {
     e.preventDefault();
-    setErrorMessage('');  // Réinitialiser les erreurs à chaque nouvelle tentative
+    setIsLoading(true);
 
-    // Validation de l'email
-    if (!email.includes('@')) {
-      setErrorMessage('Veuillez entrer un email valide.');
+    if (!validateEmail(email)) {
+      setMessage('Veuillez entrer un email valide.');
+      setIsLoading(false);
       return;
     }
 
@@ -38,13 +45,14 @@ function Connexion() {
         localStorage.setItem('user', JSON.stringify(response.data.user)); // Exemple de sauvegarde du user dans le localStorage
         navigate('/'); // Redirige vers la page d'accueil 
       } else {
-        setErrorMessage('Erreur de connexion. Vérifiez vos informations.');
+        setMessage('Erreur de connexion. Vérifiez vos informations.');
       }
     } catch (error) {
       console.error('Erreur de connexion', error);
-      setErrorMessage('Erreur lors de la connexion. Veuillez réessayer.');
+      setMessage('Erreur lors de la connexion. Veuillez réessayer.');
+    }finally {
+      setIsLoading(false);
     }
-    console.log('Connexion:', { email, motDePasse });
   };
 
   // Fonction de réinitialisation du mot de passe
@@ -56,11 +64,11 @@ function Connexion() {
         email: resetEmail, // Email pour la réinitialisation
       });
       console.log(response.data);
-      alert('Un lien de réinitialisation a été envoyé à votre email');
+      setResetMessage('Un lien de réinitialisation a été envoyé à votre email.');
     } catch (error) {
       console.error('Erreur lors de la réinitialisation du mot de passe', error);
+      setResetMessage('Erreur lors de l\'envoi du lien de réinitialisation.');
     }
-    console.log('Réinitialisation du mot de passe pour:', resetEmail);
   };
 
   return (
@@ -88,9 +96,12 @@ function Connexion() {
               />
             </div>
             <div className="form-group">
-              <button type="submit">Se connecter</button>
+            <button type="submit" disabled={isLoading}>
+                {isLoading ? 'Connexion en cours...' : 'Se connecter'}
+              </button>
             </div>
           </form>
+          {message && <p className="error-message">{message}</p>}
           <div className="links">
             <a href="#" onClick={() => setShowPasswordReset(true)}>Mot de passe oublié ?</a>
             <Link to="/inscription">Pas encore inscrit.e ? Cliquez ici</Link>

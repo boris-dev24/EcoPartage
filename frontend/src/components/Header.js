@@ -1,30 +1,21 @@
 
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaUser, FaSignInAlt, FaSignOutAlt, FaChevronDown } from 'react-icons/fa';
+import Deconnexion from '../pages/Deconnexion';
 import '../styles/Header.css';
 
 function Header() {
 
   const [activeDropdown, setActiveDropdown] = useState(null);
-
-  const handleDropdownHover = (dropdownName) => {
-    setActiveDropdown(dropdownName);
-  };
-
-  const handleDropdownLeave = () => {
-    setActiveDropdown(null);
-  };
-
-  // Etat pour savoir si l'utilisateur est connecté
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // Pour gérer le chargement des données utilisateur
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Vérifier si les données utilisateur existent dans le localStorage
     const userData = localStorage.getItem('user');
     
-    // Si les données existent et sont valides, on les parse
+      // Si les données existent et sont valides, on les parse
     if (userData) {
       try {
         const parsedUser = JSON.parse(userData);
@@ -38,10 +29,12 @@ function Header() {
     setLoading(false);
   }, []);
 
-  const handleLogout = () => {
-    // Logique de déconnexion
-    localStorage.removeItem('user'); // Retirer les données utilisateur du localStorage
-    setUser(null); // Réinitialiser l'état
+  const handleDropdownHover = (dropdownName) => {
+    setActiveDropdown(dropdownName);
+  };
+
+  const handleDropdownLeave = () => {
+    setActiveDropdown(null);
   };
 
   if (loading) {
@@ -63,22 +56,26 @@ function Header() {
               className="dropdown"
               onMouseEnter={() => handleDropdownHover('annonces')}
               onMouseLeave={handleDropdownLeave}
+              aria-haspopup="true"
+              aria-expanded={activeDropdown === 'annonces'}
             >
               <Link to="/annonces">Annonces <FaChevronDown className="dropdown-arrow" /></Link>
-              <div className={`dropdown-content ${activeDropdown === 'annonces' ? 'active' : ''}`}>
-                <Link to="/annonces/creer">Créer une annonce</Link>
-                <Link to="/annonces/voir">Voir les annonces</Link>
+              <div className={`dropdown-content ${activeDropdown === 'annonces' ? 'active' : ''}`} role="menu">
+                <Link to="/annonces/creer" role="menuitem">Créer une annonce</Link>
+                <Link to="/annonces/voir" role="menuitem">Voir les annonces</Link>
               </div>
             </li>
             <li 
               className="dropdown"
               onMouseEnter={() => handleDropdownHover('evenements')}
               onMouseLeave={handleDropdownLeave}
+              aria-haspopup="true"
+              aria-expanded={activeDropdown === 'evenements'}
             >
               <Link to="/evenements">Événements <FaChevronDown className="dropdown-arrow" /></Link>
-              <div className={`dropdown-content ${activeDropdown === 'evenements' ? 'active' : ''}`}>
-                <Link to="/evenements/creer">Créer un événement</Link>
-                <Link to="/evenements/voir">Voir les événements</Link>
+              <div className={`dropdown-content ${activeDropdown === 'evenements' ? 'active' : ''}`} role="menu">
+                <Link to="/evenements/creer" role="menuitem">Créer un événement</Link>
+                <Link to="/evenements/voir" role="menuitem">Voir les événements</Link>
               </div>
             </li>
             <li><Link to="/localisation">Localisation</Link></li>
@@ -93,9 +90,9 @@ function Header() {
           </>
          ):(
           <>
-              <span className="user-name">{user.nom}</span> {/* Afficher le nom de l'utilisateur */}
-              <button onClick={handleLogout}><FaSignOutAlt /> Déconnexion</button> {/* Bouton de déconnexion */}
-          </>
+          <span>Bienvenue, {user.nom} !</span>
+          <Deconnexion setUser={setUser} /> {/* Bouton de déconnexion */}
+        </>
          )} 
           
         </div>
