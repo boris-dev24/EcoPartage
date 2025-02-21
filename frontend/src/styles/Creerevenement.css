@@ -1,0 +1,104 @@
+.creer-evenement {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  header {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    color: white;
+    padding: 10px;
+  }
+  
+  .back-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  h1 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    margin-bottom: 5px;
+    color: #0b490d;
+  }
+  
+  input[type="text"],
+  input[type="date"],
+  textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  textarea {
+    height: 100px;
+  }
+  
+  .date-group {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .date-group > div {
+    flex: 1;
+  }
+  
+  .image-upload {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .upload-button {
+    width: 80px;
+    height: 80px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .info-text {
+    font-size: 12px;
+    color: #666;
+  }
+  
+  .submit-button {
+    background-color: #0b490d;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .submit-button:hover {
+    background-color: #008ba3;
+  }
+  
+  

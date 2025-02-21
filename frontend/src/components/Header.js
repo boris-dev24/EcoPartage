@@ -60,9 +60,11 @@ function Header() {
               aria-expanded={activeDropdown === 'annonces'}
             >
               <Link to="/annonces">Annonces <FaChevronDown className="dropdown-arrow" /></Link>
+
               <div className={`dropdown-content ${activeDropdown === 'annonces' ? 'active' : ''}`} role="menu">
                 <Link to="/annonces/creer" role="menuitem">Créer une annonce</Link>
                 <Link to="/annonces/voir" role="menuitem">Voir les annonces</Link>
+
               </div>
             </li>
             <li 
@@ -73,6 +75,7 @@ function Header() {
               aria-expanded={activeDropdown === 'evenements'}
             >
               <Link to="/evenements">Événements <FaChevronDown className="dropdown-arrow" /></Link>
+
               <div className={`dropdown-content ${activeDropdown === 'evenements' ? 'active' : ''}`} role="menu">
                 <Link to="/evenements/creer" role="menuitem">Créer un événement</Link>
                 <Link to="/evenements/voir" role="menuitem">Voir les événements</Link>
