@@ -1,6 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import '../styles/VoirAnnonce.css';
+import '../styles/VoirEvenement.css';
 import userIcon from '../images/user-icon.png';
 import stapleGunImage from '../images/staple-gun.jpg';
 import { ReactComponent as StarIcon } from '../images/star.svg';
@@ -104,7 +104,7 @@ function VoirAnnonce() {
     return (
         <div className="annonce-container">
             <div className="publish-button-container">
-                <input type="text" placeholder="Rechercher une annonce" className="search-bar" />
+                <input type="text" placeholder="Rechercher un evenement" className="search-bar" />
                 <select className="category-select">
                     <option value="">Toutes les catégories</option>
                     <option value="objets">DON D'OBJETS</option>
@@ -118,7 +118,7 @@ function VoirAnnonce() {
                         <img src={userIcon} alt="User Icon" className="user-icon" />
                         <div>
                             <div className="user-name">Yasmine # Objet.</div>
-                            <div className="annonce-details">Plus d'1 mois - Montréal, à 1.3 km.</div>
+                            <div className="annonce-details">Date(s): 06.01.2021 au 31.01.2021 - Montréal, à 1.3 km.</div>
                         </div>
                     </div>
                     <div className="more-options-container" ref={moreOptionsRef}>
@@ -132,16 +132,15 @@ function VoirAnnonce() {
                 </div>
 
                 <div className="annonce-category">
-                    DON D'OBJETS
+                    DON 
                 </div>
 
                 <div className="annonce-title" onClick={() => alert('Navigating to Annonce Detail Page')}>
-                    Agrafeuse pour le bois
+                    Vente de garage
                 </div>
 
                 <div className="annonce-description">
-                    bonjour, je donne une agrafeuse de ce genre car j'en ai plus besoin.
-                    J'aimerais la liberer au cours de la journée. Quelqu'un la veut ? Merci
+                    bonjour, j,organise une vente de garage vous etes tous inviter. Merci
                 </div>
 
                 <div className="annonce-image" onClick={() => alert('Navigating to Annonce Detail Page')}>
@@ -205,6 +204,5 @@ function VoirAnnonce() {
 }
 
 export default VoirAnnonce;
-
 
 

@@ -1,17 +1,14 @@
-
-import React, { useState, useRef, useEffect } from 'react';
-import '../styles/VoirAnnonce.css';
-import userIcon from '../images/user-icon.png';
-import stapleGunImage from '../images/staple-gun.jpg';
-import { ReactComponent as StarIcon } from '../images/star.svg';
-import { ReactComponent as LikeIcon } from '../images/like.svg';
-import { ReactComponent as ShareIcon } from '../images/share.svg';
-import { ReactComponent as EmailIcon } from '../images/email.svg';
-import { ReactComponent as CheckIcon } from '../images/check.svg';
-import { ReactComponent as MoreOptionsIcon } from '../images/more-options.svg';
+import React, { useState, useEffect, useRef } from 'react';
+import '../styles/VoirEvenement.css'; 
+import { ReactComponent as StarIcon } from '../images/star.svg'; 
+import { ReactComponent as LikeIcon } from '../images/like.svg'; 
+import { ReactComponent as ShareIcon } from '../images/share.svg'; 
+import { ReactComponent as EmailIcon } from '../images/email.svg'; 
+import { ReactComponent as CheckIcon } from '../images/check.svg'; 
+import { ReactComponent as MoreOptionsIcon } from '../images/more-options.svg'; 
 import CreerMessagerie from './CreerMessagerie'; 
 
-function VoirAnnonce() {
+function VoirAnnonce({ annonce, user }) {
     const [isFavorite, setIsFavorite] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
     const [isLiked, setIsLiked] = useState(false);
@@ -22,6 +19,7 @@ function VoirAnnonce() {
     const [comments, setComments] = useState([]);
     const [favoriteMessage, setFavoriteMessage] = useState('');
     const [likeMessage, setLikeMessage] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
 
     const moreOptionsRef = useRef(null);
     const shareMenuRef = useRef(null);
@@ -101,24 +99,30 @@ function VoirAnnonce() {
         alert('Commentaire supprimé.');
     };
 
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
     return (
         <div className="annonce-container">
             <div className="publish-button-container">
-                <input type="text" placeholder="Rechercher une annonce" className="search-bar" />
-                <select className="category-select">
-                    <option value="">Toutes les catégories</option>
-                    <option value="objets">DON D'OBJETS</option>
-                    {/* Les catégories */}
-                </select>
+                <input
+                    type="text"
+                    placeholder="Rechercher par lieu ou catégorie"
+                    className="search-bar"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                />
                 <button className="publish-button">Publier</button>
             </div>
+
             <div className="annonce">
                 <div className="annonce-header">
                     <div className="user-info">
-                        <img src={userIcon} alt="User Icon" className="user-icon" />
+                        <img src={user.profileImage} alt="User Icon" className="user-icon" />
                         <div>
-                            <div className="user-name">Yasmine # Objet.</div>
-                            <div className="annonce-details">Plus d'1 mois - Montréal, à 1.3 km.</div>
+                            <div className="user-name">{user.name}</div>
+                            <div className="annonce-details">Date(s): 06.01.2021 au 31.01.2021 - Montréal, à 1.3 km.</div>
                         </div>
                     </div>
                     <div className="more-options-container" ref={moreOptionsRef}>
@@ -132,20 +136,19 @@ function VoirAnnonce() {
                 </div>
 
                 <div className="annonce-category">
-                    DON D'OBJETS
+                    {evenement.category}
                 </div>
 
-                <div className="annonce-title" onClick={() => alert('Navigating to Annonce Detail Page')}>
-                    Agrafeuse pour le bois
+                <div className="annonce-title" onClick={() => alert('Navigating to Evenement Detail Page')}>
+                    {evenement.title}
                 </div>
 
                 <div className="annonce-description">
-                    bonjour, je donne une agrafeuse de ce genre car j'en ai plus besoin.
-                    J'aimerais la liberer au cours de la journée. Quelqu'un la veut ? Merci
+                    {evenement.description}
                 </div>
 
-                <div className="annonce-image" onClick={() => alert('Navigating to Annonce Detail Page')}>
-                    <img src={stapleGunImage} alt="Agrafeuse" />
+                <div className="annonce-image" onClick={() => alert('Navigating to Evenement Detail Page')}>
+                    <img src={evenement.image} alt={evenement.title} />
                 </div>
 
                 <div className="annonce-actions">
@@ -205,6 +208,3 @@ function VoirAnnonce() {
 }
 
 export default VoirAnnonce;
-
-
-
