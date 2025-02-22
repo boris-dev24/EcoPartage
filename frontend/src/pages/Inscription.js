@@ -1,20 +1,68 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import '../styles/Inscription.css';
+import axios from 'axios';
 
 function Inscription() {
   const [adresse, setAdresse] = useState('');
-  const [prenom, setPrenom] = useState('');
+  // const [prenom, setPrenom] = useState('');
   const [nom, setNom] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [motDePasse, setMotDePasse] = useState('');
+  const [loading, setLoading] = useState(false);  // Pour savoir si l'inscription est en cours
+  const [error, setError] = useState(''); // Pour afficher un message d'erreur si l'inscription échoue
 
-  const handleSubmit = (e) => {
+  // Utilisation de useNavigate pour la redirection après inscription
+  const navigate = useNavigate();
+
+  // Fonction pour gérer l'envoi du formulaire d'inscription
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Logique d'inscription à implémenter
-    console.log('Inscription:', { adresse, prenom, nom, email, password });
+
+    setLoading(true);  // Indiquer que la requête est en cours
+    
+    try {
+      // Validation basique (facultatif mais recommandé)
+      if (!email.includes('@')) {
+        setError('L\'email doit être valide.');
+        setLoading(false);
+        return;
+      }
+
+      if (motDePasse.length < 7) {
+        setError('Le mot de passe doit contenir au moins 7 caractères.');
+        setLoading(false);
+        return;
+      }
+
+      // Appel à l'API pour enregistrer l'utilisateur
+      const response = await axios.post('http://localhost/ecopartage/backend/api/inscription.php', {
+        nom,
+        email,
+        adresse,
+        motDePasse,
+      });
+      console.log(response.data);
+
+      // Rediriger l'utilisateur après l'inscription
+      if (response.data.success) {
+        // Enregistrer les données utilisateur dans le localStorage
+        //    
+        navigate('/connexion'); // Redirige l'utilisateur vers la page de connexion
+      } else {
+        // Gérer l'erreur spécifique renvoyée par l'API
+        setError(response.data.message || 'Erreur d\'inscription');
+        // console.error('Erreur d\'inscription');
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'inscription', error);
+      setError('Une erreur est survenue lors de l\'inscription.');
+    }finally {
+      setLoading(false); // Arrêter l'indicateur de chargement une fois la requête terminée
+    }
+    console.log('Inscription:', { adresse, nom, email, motDePasse });
   };
 
   return (
@@ -32,7 +80,7 @@ function Inscription() {
           />
           <FaMapMarkerAlt className="location-icon" />
         </div>
-        <div className="form-group">
+        {/* <div className="form-group">
           <input 
             type="text" 
             id="prenom"
@@ -41,7 +89,7 @@ function Inscription() {
             onChange={(e) => setPrenom(e.target.value)} 
             required 
           />
-        </div>
+        </div> */}
         <div className="form-group">
           <input 
             type="text" 
@@ -64,11 +112,11 @@ function Inscription() {
         </div>
         <div className="form-group">
           <input 
-            type="password" 
-            id="password"
+            type="motDePasse" 
+            id="motDePasse"
             placeholder="Mot de passe (7 car. min)"
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
+            value={motDePasse} 
+            onChange={(e) => setMotDePasse(e.target.value)} 
             minLength="7"
             required 
           />

@@ -1,83 +1,80 @@
 <?php
-//API pour gérer les annonces
+session_start();
+include '../config.php';
 
-include_once 'config.php';
-include_once 'jwt.php';
+// Vérifier si l'utilisateur est connecté
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(['success' => false, 'message' => 'Utilisateur non connecté']);
+    exit;
+}
 
-function checkAuth() {
-    if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
-        $token = str_replace('Bearer ', '', $_SERVER['HTTP_AUTHORIZATION']);
-        return validateJWT($token);
-    } else {
-        return false;
+// Vérifier si des fichiers images ont été uploadés
+if (!isset($_FILES['images']) || empty($_FILES['images']['name'][0])) {
+    echo json_encode(['success' => false, 'message' => 'Veuillez uploader au moins une image']);
+    exit;
+}
+
+// Récupérer les données du formulaire
+$titre = $_POST['titre'];
+$description = $_POST['description'];
+$categorie = $_POST['categorie'];
+$localisation = $_POST['localisation'];
+$utilisateur_id = $_SESSION['user_id'];
+
+// Validation des images
+$maxFileSize = 5 * 1024 * 1024; // 5 Mo
+$allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+$uploadDir = '../uploads/'; // Dossier où les images seront stockées
+
+foreach ($_FILES['images']['tmp_name'] as $index => $tmpName) {
+    $fileName = $_FILES['images']['name'][$index];
+    $fileSize = $_FILES['images']['size'][$index];
+    $fileType = $_FILES['images']['type'][$index];
+
+    // Vérifier la taille du fichier
+    if ($fileSize > $maxFileSize) {
+        echo json_encode(['success' => false, 'message' => "La taille du fichier $fileName ne doit pas dépasser 5 Mo"]);
+        exit;
+    }
+
+    // Vérifier le type de fichier
+    if (!in_array($fileType, $allowedTypes)) {
+        echo json_encode(['success' => false, 'message' => "Seuls les fichiers JPEG, PNG et GIF sont autorisés ($fileName)"]);
+        exit;
     }
 }
 
-// Récupérer les données envoyées via la méthode POST
-$data = json_decode(file_get_contents('php://input'), true);
+// Insérer l'annonce dans la base de données
+$sql = "INSERT INTO annonces (titre, description, categorie, localisation, utilisateur_id) 
+        VALUES (:titre, :description, :categorie, :localisation, :utilisateur_id)";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([
+    'titre' => $titre,
+    'description' => $description,
+    'categorie' => $categorie,
+    'localisation' => $localisation,
+    'utilisateur_id' => $utilisateur_id
+]);
 
-// API pour ajouter une annonce
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($userId = checkAuth()) {  // Vérifier si l'utilisateur est authentifié
-        if (isset($data['title']) && isset($data['description'])) {
-            $title = $data['title'];
-            $description = $data['description'];
-            
-            // Insérer l'annonce dans la base de données
-            $stmt = $pdo->prepare("INSERT INTO annonces (title, description, user_id) VALUES (?, ?, ?)");
-            if ($stmt->execute([$title, $description, $userId])) {
-                echo json_encode(['message' => 'Annonce ajoutée']);
-                http_response_code(201);
-            } else {
-                echo json_encode(['message' => 'Erreur lors de l\'ajout de l\'annonce']);
-                http_response_code(500);
-            }
-        } else {
-            echo json_encode(['message' => 'Le titre et la description sont obligatoires']);
-            http_response_code(400);
-        }
+$annonce_id = $pdo->lastInsertId(); // Récupérer l'ID de l'annonce créée
+
+// Enregistrer les images dans la table annonce_images
+foreach ($_FILES['images']['tmp_name'] as $index => $tmpName) {
+    $fileName = basename($_FILES['images']['name'][$index]);
+    $uploadFile = $uploadDir . $fileName;
+
+    if (move_uploaded_file($tmpName, $uploadFile)) {
+        $sql = "INSERT INTO annonce_images (annonce_id, image_path) VALUES (:annonce_id, :image_path)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            'annonce_id' => $annonce_id,
+            'image_path' => $uploadFile
+        ]);
     } else {
-        echo json_encode(['message' => 'Non autorisé']);
-        http_response_code(401);
+        echo json_encode(['success' => false, 'message' => "Erreur lors de l'upload de l'image $fileName"]);
+        exit;
     }
 }
 
-// API pour récupérer toutes les annonces
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $stmt = $pdo->prepare("SELECT * FROM annonces");
-    $stmt->execute();
-    $annonces = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode($annonces);
-    http_response_code(200);
-}
-
-// API pour supprimer une annonce
-if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-    if ($userId = checkAuth()) {
-        $data = json_decode(file_get_contents('php://input'), true);
-        $id = $data['id'];
-
-        // Vérifier si l'annonce existe
-        $stmt = $pdo->prepare("SELECT * FROM annonces WHERE id = ? AND user_id = ?");
-        $stmt->execute([$id, $userId]);
-        $annonce = $stmt->fetch();
-
-        if ($annonce) {
-            $stmt = $pdo->prepare("DELETE FROM annonces WHERE id = ?");
-            if ($stmt->execute([$id])) {
-                echo json_encode(['message' => 'Annonce supprimée']);
-                http_response_code(200);
-            } else {
-                echo json_encode(['message' => 'Erreur lors de la suppression']);
-                http_response_code(500);
-            }
-        } else {
-            echo json_encode(['message' => 'Annonce non trouvée ou non autorisée']);
-            http_response_code(404);
-        }
-    } else {
-        echo json_encode(['message' => 'Non autorisé']);
-        http_response_code(401);
-    }
-}
+echo json_encode(['success' => true, 'message' => 'Annonce publiée avec succès']);
 ?>
