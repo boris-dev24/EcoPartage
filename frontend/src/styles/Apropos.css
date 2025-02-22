@@ -1,0 +1,63 @@
+.apropos-container {
+    font-family: sans-serif; /* Or your preferred font */
+  }
+  
+  .header {
+    background-color: #2980b9; /* Approximate header color */
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .header h1 {
+    margin-bottom: 10px;
+    font-size: 2.5em; /* Adjust as needed */
+  }
+  
+  .content-container {
+    display: flex;
+  }
+  
+  .sidebar {
+    background-color: #3498db; /* Approximate sidebar color */
+    color: white;
+    width: 200px; /* Adjust as needed */
+    padding: 20px;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar li {
+    padding: 10px 0;
+    cursor: pointer; /* Add pointer cursor for better UX */
+  }
+  
+  .sidebar li:hover {
+    background-color: #2980b9; /* Slightly darker on hover */
+  }
+  
+  .main-content {
+    padding: 20px;
+  }
+  
+  .main-content h2 {
+    color: #333; /* Dark gray */
+    margin-bottom: 15px;
+  }
+  
+  .main-content h3 {
+    color: #777; /* Slightly lighter gray */
+    margin-bottom: 10px;
+    font-size: 1.2em;
+  }
+  
+  .main-content p {
+    line-height: 1.6;
+    color: #555; /* Another shade of gray */
+  }
+  
+  
