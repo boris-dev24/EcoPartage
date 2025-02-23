@@ -10,6 +10,7 @@ import ContactezNous from './pages/ContactezNous';
 import CreerAnnonce from './pages/CreerAnnonce';
 import CreerEvenement from './pages/CreerEvenement';
 import VoirAnnonce from './pages/VoirAnnonce';
+import VoirEvenement from './pages/VoirEvenement';
 import './App.css';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
             <Route path="/annonces/creerAnnonce" element={<CreerAnnonce />} />
             <Route path="/evenements/creerEvenement" element={<CreerEvenement />} />
             <Route path="/annonces/voirAnnonce" element={<VoirAnnonce />} />
+            <Route path="/evenements/voirEvenement" element={<VoirEvenement />} />
           </Routes>
         </main>
         <Footer />
