@@ -1,13 +1,13 @@
 .creer-annonce-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centrer horizontalement */
+  align-items: center; 
   padding: 20px;
 }
 
 .annonce-form {
-  width: 80%; /* Ajustez selon vos besoins */
-  max-width: 600px; /* Pour éviter que le formulaire ne soit trop large */
+  width: 80%; 
+  max-width: 600px; 
 }
 
 .form-group {
@@ -28,7 +28,7 @@ select {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box; /* Important pour que la largeur inclue le padding et la bordure */
+  box-sizing: border-box; 
   font-size: 16px;
 }
 
