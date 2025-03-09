@@ -1,0 +1,505 @@
+/* Style pour la page d'affichage des annonces */
+.annonces-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .annonces-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .annonces-header h1 {
+    color: #333;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .annonces-header p {
+    color: #666;
+    font-size: 1.1rem;
+  }
+  
+  /* Barre de recherche et filtres */
+  .search-filters-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  }
+  
+  .search-bar {
+    display: flex;
+    width: 100%;
+  }
+  
+  .search-bar input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid #e6e6e6;
+    border-radius: 5px 0 0 5px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  
+  .search-bar input:focus {
+    border-color: #4a89dc;
+  }
+  
+  .search-button {
+    padding: 0 20px;
+    background-color: #4a89dc;
+    color: white;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .search-button:hover {
+    background-color: #3b78cc;
+  }
+  
+  .search-icon {
+    font-style: normal;
+    font-size: 1.2rem;
+  }
+  
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .filter-group {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 200px;
+  }
+  
+  .filter-group label {
+    margin-right: 10px;
+    font-weight: 600;
+    color: #555;
+  }
+  
+  .filter-group select {
+    flex: 1;
+    padding: 8px 12px;
+    border: 2px solid #e6e6e6;
+    border-radius: 5px;
+    background-color: white;
+    font-size: 0.95rem;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  /* Grille d'annonces */
+  .annonces-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+  }
+  
+  .annonce-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+  
+  .annonce-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  .annonce-img {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+  }
+  
+  .annonce-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+  
+  .annonce-card:hover .annonce-img img {
+    transform: scale(1.05);
+  }
+  
+  .tag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+  }
+  
+  .gratuit {
+    background-color: #28a745;
+  }
+  
+  .negociable {
+    background-color: #fd7e14;
+  }
+  
+  .annonce-content {
+    padding: 15px;
+  }
+  
+  .annonce-title {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 10px;
+    /* Limiter à deux lignes */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 2.8em;
+  }
+  
+  .annonce-price {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #4a89dc;
+    margin-bottom: 8px;
+  }
+  
+  .annonce-location {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+  
+  .annonce-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #888;
+  }
+  
+  .annonce-category {
+    background-color: #f2f2f2;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  
+  /* État de chargement */
+  .loading-container {
+    text-align: center;
+    padding: 50px 0;
+  }
+  
+  .loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #4a89dc;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Pas d'annonces */
+  .no-annonces {
+    text-align: center;
+    padding: 50px 0;
+    color: #666;
+  }
+  
+  .no-annonces h3 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+  }
+  
+  /* Modal d'annonce */
+  .annonce-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  
+  .modal-content {
+    background-color: white;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 1000px;
+    max-height: 90vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  
+  .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+  
+  .modal-gallery {
+    flex: 1;
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .main-image {
+    height: 400px;
+    width: 100%;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .thumbnail-images {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+  }
+  
+  .thumbnail {
+    width: 80px;
+    height: 80px;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+    flex-shrink: 0;
+  }
+  
+  .thumbnail:hover {
+    opacity: 1;
+  }
+  
+  .thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .modal-details {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+  
+  .create-annonce-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .create-annonce-button {
+    background-color: #4CAF50; /* Vert */
+    color: white;
+    border: none;
+    padding: 15px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .create-annonce-button:hover {
+    background-color: #45a049; /* Vert légèrement plus foncé au survol */
+    transform: translateY(-2px); /* Effet léger de soulèvement au survol */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  .create-annonce-button:active {
+    background-color: #388e3c; /* Encore plus foncé lors du clic */
+    transform: translateY(0); /* Pas de soulèvement lors du clic */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .create-annonce-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(72, 174, 93, 0.5); /* Bordure d'accent au focus */
+  }
+  
+  .create-annonce-button span {
+    font-size: 16px;
+    text-transform: uppercase; /* Texte en majuscule */
+  }
+  
+  .modal-header h2 {
+    color: #333;
+    font-size: 1.8rem;
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .price-tag {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #4a89dc;
+    text-align: right;
+  }
+  
+  .negociable-tag {
+    display: block;
+    font-size: 0.9rem;
+    color: #fd7e14;
+    margin-top: 5px;
+  }
+  
+  .modal-info {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .info-row {
+    display: flex;
+    margin-bottom: 10px;
+  }
+  
+  .info-row:last-child {
+    margin-bottom: 0;
+  }
+  
+  .info-label {
+    font-weight: 600;
+    color: #555;
+    width: 150px;
+    flex-shrink: 0;
+  }
+  
+  .modal-description {
+    margin-bottom: 25px;
+  }
+  
+  .modal-description h3 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+  }
+  
+  .modal-description p {
+    color: #555;
+    line-height: 1.6;
+    white-space: pre-line;
+  }
+  
+  .modal-contact {
+    margin-top: 20px;
+  }
+  
+  .contact-button {
+    background-color: #4a89dc;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+  }
+  
+  .contact-button:hover {
+    background-color: #3b78cc;
+  }
+  
+  /* Responsive */
+  @media screen and (min-width: 768px) {
+    .search-filters-container {
+      flex-direction: row;
+      align-items: center;
+    }
+    
+    .search-bar {
+      width: 50%;
+    }
+  
+    .modal-content {
+      flex-direction: row;
+    }
+  
+    .modal-gallery {
+      width: 50%;
+      max-width: 500px;
+    }
+  
+    .modal-details {
+      width: 50%;
+    }
+  }
+  
+  @media screen and (max-width: 767px) {
+    .annonces-grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    
+    .modal-gallery, .modal-details {
+      width: 100%;
+    }
+    
+    .main-image {
+      height: 300px;
+    }
+  }

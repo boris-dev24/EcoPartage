@@ -1,0 +1,9 @@
+<form action="upload_images.php" method="POST" enctype="multipart/form-data">
+    <label for="annonce_id">ID de l'annonce :</label>
+    <input type="text" name="annonce_id" required>
+    
+    <label for="images">Choisissez les images :</label>
+    <input type="file" name="images[]" multiple required>
+    
+    <button type="submit">Télécharger les images</button>
+</form>

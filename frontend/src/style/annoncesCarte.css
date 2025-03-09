@@ -1,0 +1,612 @@
+/* Styles généraux de la page */
+.navbar, 
+.nav-container, 
+header, 
+.header, 
+.top-nav, 
+.main-header {
+  position: relative;
+  z-index: 1000; /* Valeur supérieure au z-index de Leaflet */
+}
+
+/* Ajustez le z-index du conteneur de carte */
+.carte-leaflet {
+  z-index: 1; /* Une valeur basse pour s'assurer qu'elle reste sous la navbar */
+}
+
+/* Assurez-vous que la modal reste au-dessus de tout, y compris la carte */
+.annonce-modal {
+  z-index: 2000; /* Valeur très élevée pour rester au-dessus de tout */
+}
+
+/* Correction spécifique pour les contrôles Leaflet */
+.leaflet-top, 
+.leaflet-bottom {
+  z-index: 800; /* Plus bas que la navbar mais plus haut que d'autres éléments */
+}
+.annonces-carte-page {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px;
+    color: #333;
+    background-color: #f9f9f9;
+  }
+  
+  /* En-tête de la page */
+  .annonces-carte-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .annonces-carte-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 8px;
+  }
+  
+  .annonces-carte-header p {
+    font-size: 1.2rem;
+    color: #7f8c8d;
+  }
+  
+  /* Filtres */
+  .carte-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+  }
+  
+  .filter-group {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+  }
+  
+  .filter-group label {
+    font-weight: 600;
+    margin-right: 10px;
+    color: #2c3e50;
+  }
+  
+  .filter-group select {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: border-color 0.3s;
+  }
+  
+  .filter-group select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  }
+  
+  /* Container principal */
+  .carte-container {
+    display: flex;
+    gap: 20px;
+  }
+  
+  /* Carte Leaflet */
+  .carte-leaflet {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+    flex: 2;
+  }
+  
+  /* Style du popup sur la carte */
+  .carte-popup {
+    width: 250px;
+    padding: 5px;
+  }
+  
+  .popup-image {
+    width: 100%;
+    height: 120px;
+    overflow: hidden;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .popup-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .popup-content h3 {
+    font-size: 1rem;
+    margin: 0 0 5px 0;
+    color: #2c3e50;
+    font-weight: 600;
+  }
+  
+  .popup-price {
+    font-weight: bold;
+    color: #e74c3c;
+    margin: 5px 0;
+    font-size: 1.1rem;
+  }
+  
+  .popup-location {
+    color: #7f8c8d;
+    font-size: 0.85rem;
+    margin: 5px 0;
+  }
+  
+  .popup-distance {
+    color: #3498db;
+    font-size: 0.85rem;
+    margin: 5px 0;
+  }
+  
+  .popup-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .popup-button:hover {
+    background-color: #2980b9;
+  }
+  
+  /* Liste des annonces */
+  .annonces-liste-carte {
+    flex: 1;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+    max-height: 600px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .annonces-liste-carte h2 {
+    font-size: 1.5rem;
+    margin: 0 0 15px 0;
+    color: #2c3e50;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+  }
+  
+  .annonces-scroll {
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-right: -10px;
+    flex-grow: 1;
+  }
+  
+  /* Scrollbar personnalisée */
+  .annonces-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .annonces-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  .annonces-scroll::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+  }
+  
+  .annonces-scroll::-webkit-scrollbar-thumb:hover {
+    background: #a0a0a0;
+  }
+  
+  /* Carte d'annonce miniature */
+  .annonce-card-mini {
+    display: flex;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    background-color: #fff;
+    border: 1px solid #eaeaea;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .annonce-card-mini:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    border-color: #bde0ff;
+  }
+  
+  .annonce-mini-img {
+    width: 120px;
+    height: 90px;
+    border-radius: 6px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  
+  .annonce-mini-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .annonce-mini-content {
+    flex: 1;
+    margin-left: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .annonce-mini-content h3 {
+    font-size: 1rem;
+    margin: 0 0 5px 0;
+    color: #2c3e50;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .annonce-mini-price {
+    font-weight: bold;
+    color: #e74c3c;
+    margin: 2px 0;
+  }
+  
+  .annonce-mini-location {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+    margin: 2px 0;
+  }
+  
+  .annonce-mini-distance {
+    font-size: 0.85rem;
+    color: #3498db;
+    margin: 2px 0;
+  }
+  
+  /* Modal détaillée */
+  .annonce-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+  }
+  
+  .modal-content {
+    display: flex;
+    background-color: white;
+    width: 90%;
+    max-width: 1000px;
+    max-height: 90vh;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+  }
+  
+  .close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #333;
+    cursor: pointer;
+    z-index: 10;
+  }
+  
+  .close-modal:hover {
+    color: #e74c3c;
+  }
+  
+  /* Galerie d'images */
+  .modal-gallery {
+    flex: 1;
+    max-width: 50%;
+    padding: 20px;
+    background-color: #f8f9fa;
+  }
+  
+  .main-image {
+    width: 100%;
+    height: 350px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  
+  .thumbnail-images {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+  }
+  
+  .thumbnail {
+    width: 80px;
+    height: 60px;
+    flex-shrink: 0;
+    border-radius: 5px;
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.2s;
+  }
+  
+  .thumbnail:hover {
+    opacity: 0.9;
+  }
+  
+  .thumbnail.active {
+    opacity: 1;
+    box-shadow: 0 0 0 2px #3498db;
+  }
+  
+  .thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Détails de l'annonce */
+  .modal-details {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+  }
+  
+  .modal-header h2 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin: 0;
+    margin-right: 15px;
+    flex: 1;
+  }
+  
+  .price-tag {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e74c3c;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .negociable-tag {
+    font-size: 0.8rem;
+    color: #fff;
+    background-color: #27ae60;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-top: 5px;
+  }
+  
+  .modal-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+  }
+  
+  .info-row {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .info-label {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    margin-bottom: 3px;
+  }
+  
+  .info-value {
+    font-size: 1rem;
+    color: #2c3e50;
+    font-weight: 500;
+  }
+  
+  .modal-description {
+    margin-bottom: 30px;
+  }
+  
+  .modal-description h3 {
+    font-size: 1.3rem;
+    color: #2c3e50;
+    margin: 0 0 10px 0;
+  }
+  
+  .modal-description p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #444;
+    white-space: pre-line;
+  }
+  
+  .modal-contact {
+    margin-top: 20px;
+  }
+  
+  .contact-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+  }
+  
+  .contact-button:hover {
+    background-color: #2980b9;
+  }
+  
+  /* Loading spinner */
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+  }
+  
+  .loading-spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border-left-color: #3498db;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .loading-container p {
+    color: #7f8c8d;
+    font-size: 1.1rem;
+  }
+  
+  /* Message d'absence d'annonces */
+  .no-annonces {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+  }
+  
+  .no-annonces p {
+    margin-bottom: 10px;
+    color: #666;
+  }
+  
+  .no-annonces p:first-child {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+  }
+  
+  /* Styles responsifs */
+  @media (max-width: 768px) {
+    .carte-container {
+      flex-direction: column;
+    }
+    
+    .carte-leaflet {
+      height: 400px;
+    }
+    
+    .modal-content {
+      flex-direction: column;
+      width: 95%;
+    }
+    
+    .modal-gallery {
+      max-width: 100%;
+    }
+    
+    .main-image {
+      height: 300px;
+    }
+    
+    .modal-header {
+      flex-direction: column;
+    }
+    
+    .modal-header h2 {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+    
+    .price-tag {
+      align-items: flex-start;
+    }
+    
+    .modal-info {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .carte-filters {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 15px;
+    }
+    
+    .filter-group {
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+    }
+    
+    .filter-group label {
+      margin-bottom: 5px;
+    }
+    
+    .filter-group select {
+      width: 100%;
+    }
+    
+    .annonce-mini-img {
+      width: 100px;
+      height: 80px;
+    }
+    
+    .main-image {
+      height: 250px;
+    }
+    
+    .modal-details {
+      padding: 15px;
+    }
+  }
