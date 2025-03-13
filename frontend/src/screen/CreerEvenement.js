@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { auth, db, storage } from "../components/firebase";
+import { auth, db, imageDb } from "../components/firebase";
 import { setDoc, doc, collection, addDoc } from "firebase/firestore";
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { toast } from "react-toastify";
-import "../style/creerAnnonce.css";
+import "../style/CreerEvenement.css";
 
-const CreerAnnonce = () => {
+const CreerEvenement = () => {
   // État initial du formulaire
   const [formData, setFormData] = useState({
     titre: '',
@@ -211,29 +210,8 @@ const CreerAnnonce = () => {
         },
         termsAccepted: true, // On enregistre que l'utilisateur a accepté les conditions
         dateCreation: new Date(),
-        nombreImages: formData.images.length,
-        images: []
+        nombreImages: formData.images.length
       };
-
-      // Créer une instance du Firebase Storage
-      const storage = getStorage();
-
-      // Tableau pour stocker les URLs des images
-      const imageURLs = [];
-
-      // Téléchargement des images dans Firebase Storage
-      for (const img of formData.images) {
-        const imageRef = ref(storage, `images/${currentUser.uid}/${img.file.name}`);
-
-        // Télécharger l'image
-        const snapshot = await uploadBytes(imageRef, img.file);
-        const imageURL = await getDownloadURL(snapshot.ref);
-        imageURLs.push(imageURL);
-      }
-
-      // Ajouter les URLs des images dans les données de l'annonce
-      annonceData.images = imageURLs;
-
       
       // Ajout du document à la collection "Annonces"
       const docRef = await addDoc(collection(db, "Annonces"), annonceData);
@@ -285,13 +263,13 @@ const CreerAnnonce = () => {
 
   return (
     <div className="form-container">
-      <h1>Créer une annonce</h1>
-      <p className="form-intro">Complétez tous les champs obligatoires pour publier votre annonce</p>
+      <h1>Créer un Evenement</h1>
+      <p className="form-intro">Complétez tous les champs obligatoires pour publier votre Evenement</p>
       
       <form onSubmit={handleSubmit}>
         {/* Section Titre */}
         <div className="form-group">
-          <label htmlFor="titre">Titre de l'annonce *</label>
+          <label htmlFor="titre">Titre de l'Evenement *</label>
           <input
             type="text"
             id="titre"
@@ -510,4 +488,4 @@ const CreerAnnonce = () => {
   );
 };
 
-export default CreerAnnonce;
+export default CreerEvenement;
