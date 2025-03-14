@@ -22,7 +22,7 @@ function Footer() {
             <li><Link to="/confidentialite">Confidentialité</Link></li>
             <li><Link to="/conditions-generales">Conditions générales</Link></li>
             <li><Link to="/faqs">FAQs</Link></li>
-            <li><Link to="/contactez-nous">Contactez-nous</Link></li>
+            <li><Link to="/contact">Contactez-nous</Link></li>
           </ul>
         </div>
         <div className="footer-section">
@@ -36,7 +36,8 @@ function Footer() {
           <h3>Rejoignez notre club</h3>
           <form className="newsletter-signup">
             <input type="email" placeholder="Entrez votre adresse e-mail" />
-            <button type="submit">S'inscrire</button>
+            {/* <button type="submit">S'inscrire</button> */}
+            <Link to="/SignUp" className="cta-button">S'inscrire</Link>
           </form>
           <p className="newsletter-disclaimer">En soumettant votre email, vous acceptez de recevoir des emails publicitaires de EcoPartage.</p>
         </div>

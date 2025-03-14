@@ -109,7 +109,7 @@ function Home() {
           </div>
         </div>
         <h2 className="inspiration-title">Inspirez-vous</h2>
-        <InspirationCarousel />
+        {/* <InspirationCarousel /> */}
       </section>
 
 
@@ -158,7 +158,7 @@ function Home() {
         <div className="different-section">
           <h3>100% différent</h3>
           <p>Ecopartage n'est pas un simple site d'annonces mais un vrai réseau social qui vous relie à une grande communauté. Les valeurs du réseau sont claires : entraide, lien social et dynamisation de la vie de communauté. Le réseau a pour vocation de créer du lien durable, sans publicité, sans revente de vos données personnelles. Et ça change tout :-)</p>
-          <Link to="/register" className="cta-button">PARTICIPER</Link>
+          <Link to="/SignUp" className="cta-button">PARTICIPER</Link>
         </div>
       </section>
 
@@ -195,7 +195,7 @@ function Home() {
             <div className="feature">
               <h3>Rejoignez le mouvement </h3>
               <p>Notre plateforme propulse le réseau indépendant d'entraide et d'échange de services au Canada notamment. Plusieurs membres l'utilisent chaque jour.</p>
-              <Link to="/register" className="cta-button">PARTICIPER</Link>
+              <Link to="/SignUp" className="cta-button">PARTICIPER</Link>
             </div>
           </div>
         </div>
@@ -211,8 +211,3 @@ function Home() {
 
 
 export default Home;
-
-
-
-
-

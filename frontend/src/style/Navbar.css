@@ -33,13 +33,13 @@
   .site-title {
     font-size: 1.4rem;
     font-weight: bold;
-    color: #10b981; /* Changed to green color */
+    color: #48d24c; /* Changed to green color */
     text-decoration: none;
     transition: color 0.2s ease;
   }
   
   .site-title:hover {
-    color: #059669; /* Darker green on hover */
+    color: #48d24c; /* Darker green on hover */
   }
   
   /* Mobile menu button */
@@ -67,7 +67,7 @@
   }
   
   .hamburger-button:hover {
-    color: #10b981; /* Changed to match the green theme */
+    color: #48d24c; /* Changed to match the green theme */
     background-color: #f3f4f6;
   }
   
@@ -110,11 +110,11 @@
   }
   
   .nav-link:hover {
-    color: #10b981;
+    color: #48d24c;
   }
   
   .nav-link.active {
-    color: #10b981; /* Changed to green */
+    color: #48d24c; /* Changed to green */
     font-weight: 500;
   }
   
@@ -136,12 +136,12 @@
   .signup-link {
     padding: 0.6rem 1.2rem;
     border-radius: 0.375rem;
-    background-color: #10b981; /* Changed to green */
+    background-color: #48d24c; /* Changed to green */
     color: white !important;
   }
   
   .signup-link:hover {
-    background-color: #059669; /* Darker green on hover */
+    background-color: #48d24c; /* Darker green on hover */
   }
   
   /* Mobile menu */
@@ -189,12 +189,12 @@
   }
   
   .mobile-signup {
-    background-color: #10b981; /* Changed to green */
+    background-color: #48d24c; /* Changed to green */
     color: white !important;
   }
   
   .mobile-signup:hover {
-    background-color: #059669; /* Darker green on hover */
+    background-color: #48d24c; /* Darker green on hover */
   }
   
   /* Utility classes */

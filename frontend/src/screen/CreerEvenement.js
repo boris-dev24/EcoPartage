@@ -4,9 +4,9 @@ import { setDoc, doc, collection, addDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom'; 
-import "../style/creerAnnonce.css";
+import "../style/CreerEvenement.css";
 
-const CreerAnnonce = () => {
+const CreerEvenement = () => {
 
   const navigate = useNavigate(); // Initialisation de navigate
 
@@ -16,6 +16,8 @@ const CreerAnnonce = () => {
     description: '',
     categorie: '',
     etat: '',
+    date: '',
+    heure: '',
     prix: '',
     prixNegociable: false,
     gratuit: false,
@@ -23,6 +25,9 @@ const CreerAnnonce = () => {
     codePostal: '',
     adresse: '',
     images: [],
+    organisateur: '',
+    contactEmail: '',
+    contactPhone: '',
     location: {
       latitude: null,
       longitude: null
@@ -117,6 +122,13 @@ const CreerAnnonce = () => {
     if (!formData.gratuit && !formData.prix) newErrors.prix = 'Le prix est obligatoire sauf pour les dons';
     if (!formData.ville.trim()) newErrors.ville = 'La ville/région est obligatoire';
     if (!formData.adresse.trim()) newErrors.adresse = 'L\'adresse est obligatoire';
+
+    if (!formData.date) newErrors.date = 'La date de l\'événement est obligatoire';
+    if (!formData.heure) newErrors.heure = 'L\'heure de l\'événement est obligatoire';
+    if (!formData.organisateur.trim()) newErrors.organisateur = 'Le nom de l\'organisateur est obligatoire';
+    if (!formData.contactEmail.trim()) newErrors.contactEmail = 'L\'email de contact est obligatoire';
+    if (!/\S+@\S+\.\S+/.test(formData.contactEmail)) newErrors.contactEmail = 'L\'email de contact est invalide';
+    if (!formData.contactPhone.trim()) newErrors.contactPhone = 'Le téléphone de contact est obligatoire';
     
     // Vérification du code postal obligatoire
     if (!formData.codePostal.trim()) {
@@ -196,7 +208,7 @@ const CreerAnnonce = () => {
       }
       
       // Préparation des données pour Firestore (sans les objets File)
-      const annonceData = {
+      const evenementData = {
         userId: currentUser.uid,
         userEmail: currentUser.email,
         titre: formData.titre,
@@ -216,7 +228,12 @@ const CreerAnnonce = () => {
         termsAccepted: true, // On enregistre que l'utilisateur a accepté les conditions
         dateCreation: new Date(),
         nombreImages: formData.images.length,
-        images: []
+        images: [],
+        date: formData.date,
+        heure: formData.heure,
+        organisateur: formData.organisateur,
+        contactEmail: formData.contactEmail,
+        contactPhone: formData.contactPhone
       };
 
       // Créer une instance du Firebase Storage
@@ -236,16 +253,16 @@ const CreerAnnonce = () => {
       }
 
       // Ajouter les URLs des images dans les données de l'annonce
-      annonceData.images = imageURLs;
+      evenementData.images = imageURLs;
 
       
-      // Ajout du document à la collection "Annonces"
-      const docRef = await addDoc(collection(db, "Annonces"), annonceData);
+      // Ajout du document à la collection "Evenement"
+      const docRefs = await addDoc(collection(db, "Evenement"), evenementData);
       
-      console.log("Annonce créée avec ID:", docRef.id);
+      console.log("Evenement créée avec ID:", docRefs.id);
       
       // Afficher un message de succès
-      toast.success("Annonce publiée avec succès!", { position: "top-center" });
+      toast.success("Evenement publiée avec succès!", { position: "top-center" });
       
       // Réinitialiser le formulaire après soumission réussie
       setFormData({
@@ -264,15 +281,20 @@ const CreerAnnonce = () => {
           latitude: null,
           longitude: null
         },
-        termsAccepted: false
+        termsAccepted: false,
+        date: '',
+        heure: '',
+        organisateur: '',
+        contactEmail: '',
+        contactPhone: ''
       });
       setErrors({});
 
-      navigate('/Annonces'); // Cette ligne redirige l'utilisateur vers la page "Annonces"
+      navigate('/Evenements'); // Cette ligne redirige l'utilisateur vers la page "Annonces"
       
     } catch (error) {
-      console.error("Erreur lors de la création de l'annonce:", error.message);
-      toast.error("Erreur lors de la création de l'annonce: " + error.message, { position: "bottom-center" });
+      console.error("Erreur lors de la création de l'evenement:", error.message);
+      toast.error("Erreur lors de la création de l'evenement: " + error.message, { position: "bottom-center" });
     } finally {
       setIsSubmitting(false);
     }
@@ -280,9 +302,8 @@ const CreerAnnonce = () => {
 
   // Options pour les catégories et états
   const categories = [
-    'Électronique', 'Meubles', 'Vêtements', 'Véhicules', 'Immobilier',
-    'Loisirs', 'Sports', 'Bricolage', 'Jardinage', 'Livres', 'Multimédia',
-    'Animaux', 'Services', 'Emploi', 'Autres'
+    'Toutes', 'Concert', 'Conférence', 'Atelier', 'Sport', 'Festival', 'Exposition',
+   'Loisirs', 'Services', 'Emploi', 'Autres'
   ];
   
   const etats = [
@@ -291,13 +312,13 @@ const CreerAnnonce = () => {
 
   return (
     <div className="form-container">
-      <h1>Créer une annonce</h1>
-      <p className="form-intro">Complétez tous les champs obligatoires pour publier votre annonce</p>
+      <h1>Créer un Evenement</h1>
+      <p className="form-intro">Complétez tous les champs obligatoires pour publier votre evenement</p>
       
       <form onSubmit={handleSubmit}>
         {/* Section Titre */}
         <div className="form-group">
-          <label htmlFor="titre">Titre de l'annonce *</label>
+          <label htmlFor="titre">Titre de l'Evenement *</label>
           <input
             type="text"
             id="titre"
@@ -324,6 +345,80 @@ const CreerAnnonce = () => {
           />
           {errors.description && <span className="error-message">{errors.description}</span>}
         </div>
+
+        {/* Section Date */}
+        <div className="form-group">
+          <label htmlFor="date">Date de l'événement *</label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            value={formData.date}
+            onChange={handleChange}
+            className={errors.date ? 'error' : ''}
+          />
+          {errors.date && <span className="error-message">{errors.date}</span>}
+        </div>
+
+        {/* Section Heure */}
+        <div className="form-group">
+          <label htmlFor="heure">Heure de l'événement *</label>
+          <input
+            type="time"
+            id="heure"
+            name="heure"
+            value={formData.heure}
+            onChange={handleChange}
+            className={errors.heure ? 'error' : ''}
+          />
+          {errors.heure && <span className="error-message">{errors.heure}</span>}
+        </div>
+
+        {/* Section Organisateur */}
+        <div className="form-group">
+          <label htmlFor="organisateur">Nom de l'organisateur *</label>
+          <input
+            type="text"
+            id="organisateur"
+            name="organisateur"
+            value={formData.organisateur}
+            onChange={handleChange}
+            placeholder="Nom de l'organisateur"
+            className={errors.organisateur ? 'error' : ''}
+          />
+          {errors.organisateur && <span className="error-message">{errors.organisateur}</span>}
+        </div>
+
+        {/* Section Contact Email */}
+        <div className="form-group">
+          <label htmlFor="contactEmail">Email de contact *</label>
+          <input
+            type="email"
+            id="contactEmail"
+            name="contactEmail"
+            value={formData.contactEmail}
+            onChange={handleChange}
+            placeholder="Email de contact"
+            className={errors.contactEmail ? 'error' : ''}
+          />
+          {errors.contactEmail && <span className="error-message">{errors.contactEmail}</span>}
+        </div>
+
+        {/* Section Contact Phone */}
+        <div className="form-group">
+          <label htmlFor="contactPhone">Téléphone de contact *</label>
+          <input
+            type="tel"
+            id="contactPhone"
+            name="contactPhone"
+            value={formData.contactPhone}
+            onChange={handleChange}
+            placeholder="Téléphone de contact"
+            className={errors.contactPhone ? 'error' : ''}
+          />
+          {errors.contactPhone && <span className="error-message">{errors.contactPhone}</span>}
+        </div>
+
         
         {/* Section Catégorie */}
         <div className="form-group">
@@ -508,7 +603,7 @@ const CreerAnnonce = () => {
         {/* Bouton de soumission */}
         <div className="form-group submit-group">
           <button type="submit" className="submit-button" disabled={isSubmitting}>
-            {isSubmitting ? "Publication en cours..." : "Publier l'annonce"}
+            {isSubmitting ? "Publication en cours..." : "Publier l'evenement"}
           </button>
         </div>
       </form>
@@ -516,4 +611,4 @@ const CreerAnnonce = () => {
   );
 };
 
-export default CreerAnnonce;
+export default CreerEvenement;
