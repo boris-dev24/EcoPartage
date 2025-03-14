@@ -18,7 +18,7 @@ import Evenements from "./screen/Evenements";
 import Contact from "./screen/Contact";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-
+import ModifierAnnonce from "./components/ModifierAnnonce";
 import { ToastContainer } from "react-toastify";
 import Profile from "./components/profile";
 import "react-toastify/dist/ReactToastify.css";
@@ -48,6 +48,9 @@ function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/Profile" element={<Profile />} />
+        <Route path="/modifier-annonce/:id" element={<ModifierAnnonce />} />
+
+
       </Routes>
     </div>
     <Footer />

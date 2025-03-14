@@ -3,9 +3,13 @@ import { auth, db, storage } from "../components/firebase";
 import { setDoc, doc, collection, addDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom'; 
 import "../style/creerAnnonce.css";
 
 const CreerAnnonce = () => {
+
+  const navigate = useNavigate(); // Initialisation de navigate
+
   // État initial du formulaire
   const [formData, setFormData] = useState({
     titre: '',
@@ -263,6 +267,8 @@ const CreerAnnonce = () => {
         termsAccepted: false
       });
       setErrors({});
+
+      navigate('/Annonces'); // Cette ligne redirige l'utilisateur vers la page "Annonces"
       
     } catch (error) {
       console.error("Erreur lors de la création de l'annonce:", error.message);

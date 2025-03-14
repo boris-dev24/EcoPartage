@@ -150,13 +150,34 @@ const Localisation = () => {
   };
 
   // Obtenir l'image principale d'une annonce
-  const getMainImage = (annonce) => {
-    if (annonce.imageURLs && annonce.imageURLs.length > 0) {
-      return annonce.imageURLs[0];
-    }
-    return '/images/dons-vetements.jpg';
-  };
+  // const getMainImage = (annonce) => {
+  //   if (annonce.imageURLs && annonce.imageURLs.length > 0) {
+  //     return annonce.imageURLs[0];
+  //   }
+  //   return '/images/dons-vetements.jpg';
+  // };
 
+  const getImageSrc = (annonce, index = 0) => {
+    // Si l'annonce a des images, utiliser la première, sinon utiliser une image placeholder
+    if (annonce && annonce.images && annonce.images.length > index) {
+      return annonce.images[index];
+    }
+    return getPlaceholderImage(index);
+  };
+ 
+ 
+  // Fonction pour afficher des images de placeholder
+  const getPlaceholderImage = (index) => {
+    const placeholders = [
+      'https://via.placeholder.com/300x200?text=Image+non+disponible',
+      'https://via.placeholder.com/300x200?text=Image+2',
+      'https://via.placeholder.com/300x200?text=Image+3',
+      'https://via.placeholder.com/300x200?text=Image+4'
+    ];
+    return placeholders[index % placeholders.length];
+  };
+ 
+ 
   // Ouvrir la modal d'une annonce
   const openModal = (annonce) => {
     setSelectedAnnonce(annonce);
@@ -275,7 +296,7 @@ const Localisation = () => {
                     <div className="carte-popup">
                       <div className="popup-image">
                         <img 
-                          src={getMainImage(annonce)} 
+                          src={getImageSrc(annonce)} 
                           alt={annonce.titre}
                           onError={(e) => {
                             e.target.onerror = null;
@@ -322,7 +343,7 @@ const Localisation = () => {
                   >
                     <div className="annonce-mini-img">
                       <img 
-                        src={getMainImage(annonce)} 
+                        src={getImageSrc(annonce)} 
                         alt={annonce.titre}
                         onError={(e) => {
                           e.target.onerror = null;
